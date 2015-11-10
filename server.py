@@ -8,15 +8,16 @@ def index():
   friends = mysql.fetch('SELECT * FROM friends')
   return render_template('index.html', friends = friends)
 
-@app.route('/friends')
+@app.route('/friends', methods=['POST'])
 def create():
   first = request.form['first']
   last = request.form['last']
   job = request.form['occupation']
-  print first, last, job
-  insert = "INSERT INTO \
-            friends (first_name, last_name, occupation, created_at, updated_at)\
-            VALUES ({},{},{}, NOW(), NOW())".format(first, last, job)
+  insert = "INSERT INTO friends \
+                (first_name, last_name, occupation, created_at, updated_at)\
+            VALUES ('{}','{}','{}', NOW(), NOW())".format(first, last, job)
+  mysql.run_mysql_query(insert)
+  return redirect('/')
 
 @app.route('/friends/<id>/edit', methods=['GET'])
 def edit(id):
@@ -25,7 +26,6 @@ def edit(id):
 
 @app.route('/friends/<id>', methods=['POST'])
 def update(id):
-  print 'in UPDATE'
   first = request.form['first']
   last = request.form['last']
   occupation = request.form['occupation']
