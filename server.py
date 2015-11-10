@@ -14,12 +14,13 @@ def create():
 
 @app.route('/friends/<id>/edit', methods=['GET'])
 def edit(id):
-  print 'In edit!'
-  return redirect('/')
+  print '*********************In edit!', id
+  return redirect('friends/' +str(id))
 
 @app.route('/friends/<id>')
 def update(id):
-  pass
+  print '!!!!!!!!!!!!!!!IN SHOW!!!!!!!!!!!!', id
+  return redirect('/')
 
 @app.route('/friends/<id>/delete', methods=['POST'])
 def destroy(id):

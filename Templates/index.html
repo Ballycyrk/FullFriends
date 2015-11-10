@@ -17,18 +17,19 @@
         <tfoot>
           {% for friend in friends: %}
           <tr>
-              <td>{{ friend['first_name'] }}</td>
-              <td>{{ friend['last_name'] }}</td>
-              <td>{{ friend['occupation'] }}</td>
-              <td>
-                <form action='/friends/value/edit' method='get'>
-                  <button  name='edit' value={{ friend['id'] }} method='get'>Edit?</button>
-                </form>
-              </td>
-              <td>
-                <button name='delete' value={{ friend['id'] }} method='post'>I hate them now.</button>
-              </td>
-            </form>
+            <td>{{ friend['first_name'] }}</td>
+            <td>{{ friend['last_name'] }}</td>
+            <td>{{ friend['occupation'] }}</td>
+            <td>
+              <form action='/friends/{{friend['id']}}/edit' method='get'>
+                <button  type='hidden' method='get'>Edit?</button>
+              </form>
+            </td>
+            <td>
+              <form action='/friends/{{friend['id']}}/delete' method='post'>
+                <button type='hidden' method='post'>I hate them now.</button>
+              </form>
+            </td>
           </tr>
           {% endfor %}
         </tfoot>
