@@ -5,15 +5,17 @@ app.secret_key = 'silvergold'
 mysql = MySQLConnector('friendsdb')
 @app.route('/')
 def index():
-  return render_template('index.html')
+  friends = mysql.fetch('SELECT * FROM friends')
+  return render_template('index.html', friends = friends)
 
 @app.route('/friends')
 def create():
   pass
 
-@app.route('/friends/<id>/edit')
+@app.route('/friends/<id>/edit', methods=['GET'])
 def edit(id):
-  pass
+  print 'In edit!'
+  return redirect('/')
 
 @app.route('/friends/<id>')
 def update(id):
