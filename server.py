@@ -10,20 +10,34 @@ def index():
 
 @app.route('/friends')
 def create():
-  pass
+  first = request.form['first']
+  last = request.form['last']
+  job = request.form['occupation']
+  print first, last, job
+  insert = "INSERT INTO \
+            friends (first_name, last_name, occupation, created_at, updated_at)\
+            VALUES ({},{},{}, NOW(), NOW())".format(first, last, job)
 
 @app.route('/friends/<id>/edit', methods=['GET'])
 def edit(id):
-  print '*********************In edit!', id
-  return redirect('friends/' +str(id))
+  friend = mysql.fetch('SELECT * FROM friends WHERE id={}'.format(id))
+  return render_template('friends.html', friend = friend)
 
-@app.route('/friends/<id>')
+@app.route('/friends/<id>', methods=['POST'])
 def update(id):
-  print '!!!!!!!!!!!!!!!IN SHOW!!!!!!!!!!!!', id
+  print 'in UPDATE'
+  first = request.form['first']
+  last = request.form['last']
+  occupation = request.form['occupation']
+  update = "UPDATE friends \
+            SET first_name='{}',last_name='{}',occupation='{}',updated_at= NOW()\
+            WHERE id={}".format(first, last, occupation, id)
+  mysql.run_mysql_query(update)
   return redirect('/')
 
 @app.route('/friends/<id>/delete', methods=['POST'])
 def destroy(id):
-  print '*******************IN DELETE**************************'
+  delete = "DELETE FROM friendsdb.friends WHERE id = {}".format(id)
+  mysql.run_mysql_query(delete)
   return redirect('/')
 app.run(debug=True)

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <title>Edit Friend</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='CSS/style.css') }}">
+  </head>
+  <body>
+    <div id="container">
+      <h1>My Friend {{friend[0]['first_name']}}</h1>
+      <table>
+        <thead>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Occupation</th>
+        </thead>
+        <tfoot>
+          <tr>
+            {% for col in friend %}
+            <form action='/friends/{{ col['id'] }}' method='post'>
+            <td><input type='text' name='first' value="{{ col['first_name'] }}"></td>
+            <td><input type='text' name='last' value="{{ col['last_name'] }}"></td>
+            <td><input type='text' name='occupation' value="{{ col['occupation'] }}">
+            </td>
+            <td><input type='submit' value='update'></td>
+          </form>
+            {% endfor %}
+        </tfoot>
+      </table>
+    </div>
+  </body>
+</html>
