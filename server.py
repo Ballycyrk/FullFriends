@@ -21,7 +21,8 @@ def edit(id):
 def update(id):
   pass
 
-@app.route('/friends/<id>/delete')
+@app.route('/friends/<id>/delete', methods=['POST'])
 def destroy(id):
-  pass
+  print '*******************IN DELETE**************************'
+  return redirect('/')
 app.run(debug=True)
